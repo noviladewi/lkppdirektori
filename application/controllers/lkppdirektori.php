@@ -110,7 +110,10 @@ class Lkppdirektori extends CI_Controller {
 				$this->load->view("hasil_pencarian",$data);
 		}
 	
-}
+		}
+
+		public function edit
+
 }
 
 ?>
