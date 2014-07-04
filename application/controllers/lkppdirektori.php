@@ -111,9 +111,11 @@ class Lkppdirektori extends CI_Controller {
 		}
 	
 		}
-
-		public function edit
+		public function hasil_pencarian ()
+		{
+			$this->load->view("shared/header");
+			$this->load->view("hasil_pencarian");
+			$this->load->view("shared/footer");
+		}
 
 }
-
-?>
