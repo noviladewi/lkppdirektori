@@ -175,6 +175,7 @@
 	<button type='submit' class='btn btn-danger'>Lanjutkan>></button>
 	</div>
 	</center>
+	
 <?php echo form_close(); ?>
 </body>
 </html>

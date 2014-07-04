@@ -1,0 +1,13 @@
+<html>
+<head>
+</head>
+<form class="form-inline" action="<?php echo base_url() ?>index.php/lkppdirektori/searching">
+		<div class="span4">
+		<div class="input-append">
+						<input class="input-large" id="search_needs" type="text" class="form-control" placeholder="Bisnis yang Anda cari?">
+		</div>
+		</div>
+
+		<div class="span4">
+		<div class="input-append">
+						<input class="input-large" id="search_needs" type="text" class="form-control" placeholder="Masukan lokasi Anda(kota,provinsi,atau kode pos)">
