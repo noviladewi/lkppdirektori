@@ -78,4 +78,74 @@ class M_profile extends CI_Model
 		$query = $this->db->get("dafbis");
 		return $query;
 	}
+	
+	function profile_company($id)
+	{	
+		$this->db->where('perusahaanID',$id);
+		$profile_company=$this->db->get('profile');
+		return $profile_company;
+	}
+	
+	function select_profile_byCategory($id)
+	{
+		$this->db->where('perusahaanID',$id);
+		$select_profile=$this->db->get('profile');
+		$get=$select_profile->row();
+		$this->db->select('namaPerusahaan');
+		$this->db->where('bidangPekerjaan',$get->bidangPekerjaan);
+		$profiel=$this->db->get('profile');
+		return $profile->result();
+	}
+	
+	function portofolio_byCompanyID($id)
+	{
+		$this->db->where('perusahaanID',$id);
+		return $this->db->get('portofolio');
+	}
+	
+	function get_PerusahaanID()
+	{
+		$user = $this->ion_auth->user()->row();
+		$this->db->select('perusahaanID');
+		$this->db->where('user',$user->id);
+		return $this->db->get('dafbis');
+	}
+	
+	function find_industry()
+	{
+		$input=$_GET['search_industry'];
+		$this->db->order_by('perusahaanID','asc');
+		$this->db->like('bidus',$input);
+		$all_industry=$this->db->get('dafbis',$limit, $offset);
+		return $all_industry->result();
+	}
+	
+	function find_all_industry()
+	{
+		$input=$_GET['search_industry'];
+		$this->db->order_by('perusahaanID','asc');
+		$this->db->like('bidus',$input);
+		$all_industry=$this->db->get('dafbis');
+		return $all_industry->result();
+	}
+	
+	function find_loaction()
+	{
+		$input=$_GET['search_location'];
+		$this->db->order_by('perusahaanID','asc');
+		$this->db->like('kota',$input);
+		$this->db->like('provinsi',$input);
+		$this->db->like('kode_pos',$input);
+		$all_industry=$this->db->get('dafbis',$limit,$offset);
+	}
+	
+	function find_all_location()
+	{
+		$input=$_GET['search_location'];
+		$this->db->order_by('perusahaanID','asc');
+		$this->db->like('kota',$input);
+		$this->db->like('kode_pos',$input);
+		$all_industry=$this->db->get('dafbis');
+	}
+	
 }

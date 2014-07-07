@@ -38,9 +38,17 @@
 				  <p> Jumlah Karyawan		<? echo $detail_perusahaan->jml_karyawan?></p>
 				  <p> Pendapatan tahunan	<? echo $detail_perusahaan->pendapatan_thn?>
 				 
-				 <h5> Portofolio <h5>
 				 
-				  
+				 <h5> Portofolio <h5>
+				 "<div class='span8'>
+					<img src=".base_url()."application/assets/img/upload/".$detail_perusahaan->file_photo." class='account'></br>
+						</div>
+						<div class='span8'>";		
+				"<div class = 'span8'>
+				<img src=".base_url()."application/assets/img/upload/".$detail_perusahaan->file_photo." class='account'></br>
+				</div>
+					<div class='span8'>";
+					
 				  
 				  
 	

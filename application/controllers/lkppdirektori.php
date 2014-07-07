@@ -117,5 +117,120 @@ class Lkppdirektori extends CI_Controller {
 			$this->load->view("hasil_pencarian");
 			$this->load->view("shared/footer");
 		}
+		
+		public function search_profile()
+		{
+			$limit=1;
+			parse_str($_SERVER['QUERY_STRING'],$_GET);
+						$this->load->helper('form');
+			if(empty($_GET['result']))
+					{$offset=0;}
+					else
+					{$offset = $_GET['result'];
+			$data['company_profile']=$this->m_profile->find_company($limit, $offset)->result();
+			$this->load->library('pagination');
+			$config['total_rows'] =$this->m_profile->count_find_company();
+			$config['per_page'] = $limit;
+			$config['uri_segment'] = 3;
+			$config['page_query_string'] = TRUE;
+			$config['query_string_segment'] = 'result';
+			$this->pagination->initialize($config);
+			$data['pagination'] = $this->pagination->create_links();
+			$data['total_records'] = $this->m_profile->count_find_company();
+			$this->load->view("shared/footer");
+			$this->load->view("shared/Header");
+			}
 
+		}
+		public function search_result($id)
+		{
+			$this->load->helper('form');
+			$data['desc_profile']=$this->m_profile->profile_company($id)->result();
+			$data['get_category']=$this->m_profile ->selct_profile_byCategory($id);
+			// load the library
+			$this->load->library('googlemaps');
+			$config['zoom'] = 'auto';
+			$this->googlemaps->initialize($config);
+			$data['status']=$this->m_profile->profile_company($id)->row();
+			$status=$this->m_profile->profile_company($id)->row();
+			$data['pic']=$this->m_profile->photo_profile($status);
+			$desprofile=$this->m_profile->profile_company($id)->result();
+			foreach ($desprofile as $getDirection )
+				{	
+					$marker = array();	
+	 				$marker['position'] = $getDirection->lat.','.$getDirection->lng;
+					$this->googlemaps->add_marker($marker);
+				}
+			$data['map'] = $this->googlemaps->create_map();
+			$data['dataportofolio']=$this->m_profile->portofolio_byCompanyID($id)->result();
+			$this->load->view("shared/header");
+			$this->load->view("shared/footer");	
+		}
+		
+		public function search()
+			{
+				$limit=$_GET['pagination'];
+				if (empty($_GET['result']))
+					{$offset=0;}
+						else
+					{$offset=($_GET['result']-1)*2;}
+				parse_str($_SERVER['QUERY_STRING'],$_GET);
+				if ($_GET['btn']=='keyword1')
+					{
+						$data['company_profile']=$this->m_profile->find_people($limit,$offset);
+						$his->load->library('pagination');
+						$config['base_url'] = site_url('lkppdirektori/search?search_comapany=&btn=keyword1&pagination='.$limit)
+						//$config['total_rows'] = count($this->m_profile->find_company_all());
+						$config['next_link'] = 'Next';
+						$config['prev_page'] = 'Prev';;
+						$config['per_page'] = $limit;
+						$config['uri_segment'] = 3;
+						$config['page_query_string']=TRUE;
+						$config['query_string_segment']= 'result';
+						$this->pagination->initialize($config);
+						$data['pagination'] = $this->pagination->create_links();
+						$data['total_records'] = count($this->m_profile->find_people_all());
+						$this->load->view("shared/header");
+						$this->template->load('lkppdirektori/search',$data);
+						$this->load->view("shared/footer");
+					}
+					
+				if($_GET['btn']=='keyword2')
+					{
+						$data['company_profile']=$this->m_profile->all_company($limit, $offset);
+						$this->load->library ('pagination');
+						$config['base_url'] = site_url('lkppdirektori/search?search_comapany=&btn=keyword1&pagination='.$limit)
+						$config['total_rows'] = count($this->m_profile->find_company_all());
+						$config['next_link'] = 'Next';
+						$config['prev_page'] = 'Prev';;
+						$config['per_page'] = $limit;
+						$config['uri_segment'] = 3;
+						$config['page_query_string']=TRUE;
+						$config['query_string_segment']= 'result';
+						$this->pagination->initialize($config);
+						$data['pagination'] = $this->pagination->create_links();
+						$data['total_records'] = count($this->m_profile->find_people_all());
+						$this->load->view("shared/header");
+						$this->template->load('lkppdirektori/search',$data);
+						$this->load->view("shared/footer");
+					}
+				
+				// if($_GET) ['btn']=='keyword2')
+					// {
+						// $data['company_profile']=$this->m_profile->all_company($limit, $offset);
+						// $this->load->library ('pagination');
+						// $config['base_url'] = site_url('lkppdirektori/search?search_comapany=&btn=keyword1&pagination='.$limit)
+						// $config['total_rows'] = count($this->m_profile->find_company_all());
+						// $config['next_link'] = 'Next';
+						// $config['prev_page'] = 'Prev';;
+						// $config['per_page'] = $limit;
+						// $config['uri_segment'] = 3;
+						// $config['page_query_string']=TRUE;
+						// $config['query_string_segment']= 'result';
+						// $this->pagination->initialize($config);
+						// $data['pagination'] = $this->pagination->create_links();
+						// $data['total_records'] = count($this->m_profile->find_people_all());
+						// $this->load->view("shared/header");
+						// $this->template->load('lkppdirektori/search',$data);
+						// $this->load->view("shared/footer");
 }

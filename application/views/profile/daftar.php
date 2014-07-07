@@ -1,5 +1,6 @@
 <html>
 <head>
+<link rel="stylesheet" href="/iklimusaha/application/assets/css/bootstrap2.css">
 </head>
 <body>
 <center><h3>Daftar sekarang untuk mengelola bisnis Anda</h3></center>

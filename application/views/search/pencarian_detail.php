@@ -1,5 +1,6 @@
 <html>
 <head>
+<link rel="stylesheet" href="/iklimusaha/application/assets/css/bootstrap2.css">
 </head>
 <center><h3>Pencarian Detail</h3></center>
 <body>
@@ -22,6 +23,7 @@
 			</div>
 			</div>			
 							
+
 			<div class="span6" >
 			<div class="input-append">
 			<select name='company' id='company'>
