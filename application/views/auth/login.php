@@ -21,11 +21,11 @@
 </div>
 <div class="controls">
 <center>
-	<button type='submit' class='btn btn-danger'>Masuk</button>
+<button type='submit' class='btn btn-danger'>Masuk</button>
 </center>
 </div>		
 <br>
-<center><a href="<?php echo base_url();?>index.php/auth/forgot_password">Lupa kata sandi</a>| <a href="<?php echo base_url();?>index.php/lkppdirektori/daftar">Daftar</a></center>
+<center><a href="<?php echo base_url();?>index.php/auth/forgot_password">Lupa kata sandi</a>| <a href="<?php echo base_url();?>index.php/auth/choose_user">Daftar</a></center>
 <?php echo form_close()?>
 </body>
 </html>

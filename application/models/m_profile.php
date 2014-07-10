@@ -148,4 +148,12 @@ class M_profile extends CI_Model
 		$all_industry=$this->db->get('dafbis');
 	}
 	
+	function select_profile()
+	{
+		$user = $this->ion_auth->user()->row();
+		$this->db->where('user',$user->id);
+		$select_profile=$this->db->get('dafbis');
+		return $select_profile;
+	}
+	
 }

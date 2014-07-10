@@ -9,6 +9,7 @@ class Auth extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->helper('url');
 		$this->load->database();
+		$this->load->model('m_profile');
 		
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
@@ -52,7 +53,7 @@ class Auth extends CI_Controller {
 		if ($this->ion_auth->logged_in())
 				{
 
-					redirect('auth/dafbis');
+					redirect('auth/add_profile_company');
 				}
 				$this->form_validation->set_rules('identity', 'inputnama_perusahaan', 'required');
 				$this->form_validation->set_rules('password', 'inputpassword', 'required');
@@ -66,7 +67,7 @@ class Auth extends CI_Controller {
 								{
 
 									$this->session->set_flashdata('message',$this->ion_auth->messages());
-									redirect('lkppdirektori/dafbis');
+									redirect('lkppdirektori/add_profile_company');
 								}
 							else 
 								{
@@ -85,14 +86,14 @@ class Auth extends CI_Controller {
 						'name' =>'identity',
 						'placeholder' => 'Email',
 						'type' => 'text',
-						'value' => $this->form_validation->set_value('identity'),
+						//'value' => $this->form_validation->set_value('identity'),
 						);
 						$main['password'] = array(
 						'id' => 'password',
 						'name' => 'password',
 						'type' => 'password',
 						'placeholder' => 'Password',
-						'value' => $this->form_validation->set_value('password'),
+						//'value' => $this->form_validation->set_value('password'),
 						);
 						$data['content'] = $this->load->view('auth/login', $main, true);
 
@@ -401,6 +402,7 @@ class Auth extends CI_Controller {
 	{
 		$tables = $this->config->item('tables','ion_auth');
 		
+		
 		//validate form input
 		$this->form_validation->set_rules('nama_pengguna', $this->lang->line('create_user_validation_fname_label'), 'required|xss_clean');
 		$this->form_validation->set_rules('nama_anda', $this->lang->line('create_user_validation_lname_label'), 'required|xss_clean');
@@ -440,7 +442,57 @@ class Auth extends CI_Controller {
 			//set the flash data error message if there is one
 			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-			$this->_render_page('profile/daftar', $this->data);
+			$this->_render_page('auth/create_user', $this->data);
+		}
+	}
+	
+	//add user_company
+	function create_user_company()
+	{
+		$tables = $this->config->item('tables','ion_auth');
+		
+		
+		//validate form input
+		$this->form_validation->set_rules('nama_pengguna', $this->lang->line('create_user_validation_fname_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('nama_anda', $this->lang->line('create_user_validation_lname_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique['.$tables['users'].'.email]');
+		$this->form_validation->set_rules('telepon', $this->lang->line('create_user_validation_phone_label'), 'required|xss_clean');
+		$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+		$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+
+		if ($this->form_validation->run() == true)
+		{
+			$username = strtolower($this->input->post('nama_pengguna')) . ' ' . strtolower($this->input->post('nama_anda'));
+			$email    = strtolower($this->input->post('email'));
+			$password = $this->input->post('password');
+
+			$additional_data = array(
+				'first_name' => $this->input->post('nama_pengguna'),
+				'last_name'  => $this->input->post('nama_anda'),
+				'company'	 => $this->input->post('nama_perusahaan'),
+				'email'		=> $this->input->post('email'),
+				'telepon'   => $this->input->post('telepon'),
+				'alamat'	=> $this->input->post('alamat'),
+				'kota'		=> $this->input->post('kota'),
+				'provinsi'	=> $this->input->post('provinsi'),
+				'kode_pos' => $this->input->post('kode_pos'),
+				'keteranganlain' => $this->input->post('keteranganlain'),
+			);
+		}
+		if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data))
+		{
+			//check to see if we are creating the user
+			//redirect them back to the admin page
+			$this->session->set_flashdata('message', $this->ion_auth->messages());
+			redirect("auth", 'refresh');
+		}
+		else
+		{
+			//display the create user form
+			//set the flash data error message if there is one
+			$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+			$this->_render_page('auth/create_user_company', $this->data);
 		}
 	}
 
@@ -716,6 +768,13 @@ class Auth extends CI_Controller {
 		$view_html = $this->load->view($view, $this->viewdata, $render);
 
 		if (!$render) return $view_html;
+	}
+	
+	function choose_user()
+	{
+		$this->load->view("shared/header");
+		$this->load->view("auth/choose_user");
+		$this->load->view("shared/footer");
 	}
 
 }
