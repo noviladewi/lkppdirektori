@@ -157,6 +157,14 @@ class Lkppdirektori extends CI_Controller {
 			$this->load->view("shared/footer");	
 		}
 		
+		public function portofolio()
+		{
+			$this->load->view("shared/header");
+			$this->load->view("portofolio/add_portof");
+			$this->load->view("shared/footer");
+			
+		}
+		
 		// public function search()
 			// {
 				// $limit=$_GET['pagination'];

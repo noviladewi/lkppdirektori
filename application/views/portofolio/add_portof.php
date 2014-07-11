@@ -1,4 +1,5 @@
-	<html>
+<html>
+<link rel="stylesheet" href="/lkppdirektori/applications/assets/css/bootstrap2.css">
 <head>
 </head>
 <body>

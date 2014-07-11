@@ -61,12 +61,36 @@
 			<input type="text" class="input-large" name="email" placeholder="Email">
 			</div>
 		</div>
+		
+	<div class="span6">
+	<div class="input-append">
+		<textarea rows="3" name="spesialisasi" placeholder="Spesialisasi"></textarea>
+		
+		</div>
+		</div>
 	
 	<div class="span6">
 	<div class="input-append">
 		<input type="text" class="input-large" name="kota" placeholder="Kota">
 		</div>
 		</div>
+		
+	<div class="span6">
+	<div class="input-append">
+		<textarea rows="3" name="pengalaman" placeholder="Pengalaman"></textarea>
+		</div>
+		</div>
+		
+	<div class="span6">
+	<div class="control-group">
+	<label class="control-label" for="inputHistoryOfEducation">Riwayat Pendidikan : </label>
+	<div class="controls">
+		<input type="text" class="input-large" name="SD" placeholder="SD"> &nbsp; <input type="text" class="input-large" name="tahun" placeholder="Tahun lulus">
+		<input type="text" class="input-large" name="SMP" placeholder="SMP"> &nbsp; <input type="text" class="input-large" name="tahun2" placeholder="Tahun lulus">
+		<input type="text" class="input-large" name="SMA" placeholder="SMA"> &nbsp; <input type="text" class="input-large" name="tahun3" placeholder="Tahun lulus">
+		<input type="text" class="input-large" name="PerguruanTinggi" placeholder="Perguruan Tinggi"> &nbsp; <input type="text" class="input-large" name="tahun4" placeholder="Tahun Lulus">
+		<input type="text" class="input-large" name="IPK" placeholder="IPK">
+	
 
 	<div class="span6">
 	<div class="input-append">
